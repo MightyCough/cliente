@@ -1,0 +1,41 @@
+<div class="flex items-center justify-center h-screen bg-gradient-to-r from-blue-500 to-indigo-600">
+  <div class="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full">
+    <h2 class="text-2xl font-bold text-center text-gray-800">Acceso al Sistema</h2>
+    <form class="mt-6 space-y-4" (ngSubmit)="ingresar()">
+      <!-- input de usuario -->
+      <div>
+        <label for="usuario" class="block text-sm font-medium text-gray-700">Usuario</label>
+        <input
+          type="text"
+          id="usuario"
+          [(ngModel)]="usuario"
+          name="usuario"
+          class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-700"
+          placeholder="Ingresa tu usuario"
+          required
+        />
+      </div>
+      <!-- input de contraseña -->
+      <div>
+        <label for="clave" class="block text-sm font-medium text-gray-700">Contraseña</label>
+        <input
+          type="password"
+          id="clave"
+          [(ngModel)]="clave"
+          name="clave"
+          class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-700"
+          placeholder="Ingresa tu contraseña"
+          required
+        />
+      </div>
+      <!-- botón de login -->
+      <button
+        type="submit"
+        class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 shadow-md"
+      >
+        Ingresar
+      </button>
+    </form>
+    <!-- mensaje o link adicional -->
+  </div>
+</div>

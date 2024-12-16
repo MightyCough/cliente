@@ -1,0 +1,152 @@
+<app-navegation></app-navegation>
+<p-confirmDialog></p-confirmDialog>
+<p-toast></p-toast>
+
+<div class="container mx-auto mt-8">
+  <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Gestión de Citas</h1>
+
+  <!-- Tabla -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+      <thead>
+        <tr class="bg-gray-100 border-b border-gray-200">
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">ID</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">Cliente</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">Vendedor</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">Vehículo</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">Fecha Cita</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">Estado</th>
+          <th class="py-3 px-4 text-center text-sm font-semibold text-gray-600">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cita of citas" class="border-b hover:bg-gray-50">
+          <td class="py-3 px-4 text-sm text-gray-700">{{ cita.id }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">{{ cita.cliente?.nombre }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">{{ cita.vendedor?.nombre }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">{{ cita.vehiculo?.marca }} - {{ cita.vehiculo?.modelo }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">{{ cita.fecha_cita | date: 'dd/MM/yyyy' }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700 capitalize">{{ cita.estado }}</td>
+          <td class="py-3 px-4 text-center">
+            <div class="flex justify-center gap-2">
+              <button
+                type="button"
+                (click)="editarCita(cita)"
+                class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-sm">
+                Editar
+              </button>
+              <button
+                type="button"
+                (click)="eliminarCita(cita)"
+                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm">
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Botón para Crear Cita -->
+  <div class="mt-6 text-right">
+    <button
+      (click)="verDialogo()"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md shadow-md">
+      Crear Cita
+    </button>
+  </div>
+</div>
+
+<!-- Modal -->
+<p-dialog header="{{tituloDialogo}}" [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }">
+  <p class="text-gray-600 mb-5">Ingrese los datos de la cita.</p>
+
+  <div class="space-y-4">
+    <div>
+      <label for="cliente" class="block text-sm font-medium text-gray-700">Cliente</label>
+      <select
+  [(ngModel)]="nuevaCit.cliente"
+  id="cliente"
+  class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+  <option *ngFor="let cliente of clientes" [ngValue]="cliente">
+    {{ cliente.nombre }} {{ cliente.apellidos }}
+  </option>
+</select>
+    </div>
+    <div>
+      <label for="vendedor" class="block text-sm font-medium text-gray-700">Vendedor</label>
+      <select
+  [(ngModel)]="nuevaCit.vendedor"
+  id="vendedor"
+  class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+  <option *ngFor="let vendedor of vendedores" [ngValue]="vendedor">
+    {{ vendedor.nombre }} {{ vendedor.telefono }}
+  </option>
+</select>
+    </div>
+    <div>
+      <label for="vehiculo" class="block text-sm font-medium text-gray-700">Vehículo</label>
+      <select
+        [(ngModel)]="nuevaCit.vehiculo"
+        id="vehiculo"
+        class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        <option *ngFor="let vehiculo of vehiculos" [ngValue]="vehiculo">
+          {{ vehiculo.marca }} - {{ vehiculo.modelo }}
+        </option>
+      </select>
+    </div>
+    <div>
+      <label for="fecha_cita" class="block text-sm font-medium text-gray-700">Fecha de Cita</label>
+      <input
+        [(ngModel)]="nuevaCit.fecha_cita"
+        id="fecha_cita"
+        type="date"
+        class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    <div>
+      <label for="estado" class="block text-sm font-medium text-gray-700">Estado</label>
+      <select
+        [(ngModel)]="nuevaCit.estado"
+        id="estado"
+        class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        <option value="pendiente">Pendiente</option>
+        <option value="confirmada">Confirmada</option>
+        <option value="cancelada">Cancelada</option>
+      </select>
+    </div>
+    <div>
+      <label for="notas" class="block text-sm font-medium text-gray-700">Notas</label>
+      <textarea
+        [(ngModel)]="nuevaCit.notas"
+        id="notas"
+        rows="3"
+        class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Notas adicionales (opcional)">
+      </textarea>
+    </div>
+  </div>
+
+  <!-- Botones -->
+  <div class="mt-5 flex justify-end gap-4">
+    <button
+      (click)="visible = false"
+      class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md">
+      Cancelar
+    </button>
+    <button
+      (click)="guardarCita()"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+      Guardar
+    </button>
+  </div>
+</p-dialog>
+
+<!-- Botón de Cerrar Sesión -->
+<div class="mt-6">
+  <button
+    (click)="logout()"
+    class="w-full py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-md focus:outline-none">
+    Cerrar Sesión
+  </button>
+</div>

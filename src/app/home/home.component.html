@@ -1,0 +1,65 @@
+<app-navegation></app-navegation>
+
+<!-- encabezado -->
+<header class="bg-gradient-to-r from-blue-500 to-blue-700 text-white py-12">
+  <div class="container mx-auto text-center">
+    <h1 class="text-4xl font-bold mb-4">Bienvenido a la Gestión de Citas de Vehículos</h1>
+    <p class="text-lg mb-6">Agenda, gestiona y revisa tus citas de mantenimiento en un solo lugar.</p>
+    <div class="space-x-4" >
+      <button
+  class="bg-white text-blue-600 py-2 px-6 rounded-lg shadow-md hover:bg-gray-200"
+(click)="navVehiculo()"
+>
+  Crear Vehículo
+</button>
+      <button class="bg-white text-blue-600 py-2 px-6 rounded-lg shadow-md hover:bg-gray-200" (click)="navVendedor()">
+        Registrarse como Vendedor
+      </button>
+      <button class="bg-white text-blue-600 py-2 px-6 rounded-lg shadow-md hover:bg-gray-200" (click)="navCliente()">
+        Registrarse como Cliente
+      </button>
+      <button class="bg-white text-blue-600 py-2 px-6 rounded-lg shadow-md hover:bg-gray-200" (click)="navCita()">
+        Registrar una cita
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- secciones principales -->
+<main class="container mx-auto mt-10 px-4 space-y-12">
+  <!-- sección de servicios -->
+  <section class="text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Servicios Destacados</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white shadow-md rounded-lg p-6">
+        <h3 class="text-xl font-bold text-blue-600 mb-2">Revisión Técnica</h3>
+        <p class="text-gray-600">Asegúrate de que tu vehículo cumpla con todas las normativas de tránsito.</p>
+      </div>
+      <div class="bg-white shadow-md rounded-lg p-6">
+        <h3 class="text-xl font-bold text-blue-600 mb-2">Mantenimiento General</h3>
+        <p class="text-gray-600">Mantén tu vehículo en perfecto estado con nuestros servicios de calidad.</p>
+      </div>
+      <div class="bg-white shadow-md rounded-lg p-6">
+        <h3 class="text-xl font-bold text-blue-600 mb-2">Diagnóstico Rápido</h3>
+        <p class="text-gray-600">Identifica problemas en tu vehículo de manera rápida y eficiente.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- sección de citas programadas -->
+  <section>
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Tus Próximas Citas</h2>
+    <div class="bg-white shadow-md rounded-lg p-6">
+      <ul class="space-y-4">
+        <li class="flex justify-between items-center">
+          <span class="text-gray-700">Cita para revisión técnica - 10 de diciembre, 2024</span>
+          <a href="#" class="text-blue-600 hover:underline">Ver Detalles</a>
+        </li>
+        <li class="flex justify-between items-center">
+          <span class="text-gray-700">Mantenimiento general - 15 de diciembre, 2024</span>
+          <a href="#" class="text-blue-600 hover:underline">Ver Detalles</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</main>

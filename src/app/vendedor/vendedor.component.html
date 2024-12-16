@@ -1,0 +1,113 @@
+<app-navegation></app-navegation>
+<p-confirmDialog></p-confirmDialog>
+<p-toast></p-toast>
+
+<div class="container mx-auto mt-8">
+  <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Gestión de Vendedores</h1>
+
+  <!-- Tabla -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+      <thead>
+        <tr class="bg-gray-100 border-b border-gray-200">
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">ID</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">Nombre</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">Teléfono</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">Vehículos</th>
+          <th class="py-3 px-4 text-center text-sm font-semibold text-gray-600">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vendedor of vendedores" class="border-b hover:bg-gray-50">
+          <td class="py-3 px-4 text-sm text-gray-700">{{ vendedor.id }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">{{ vendedor.nombre }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">{{ vendedor.telefono }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">
+            <ul>
+              <li *ngFor="let vehiculo of vendedor.vehiculos">
+                {{ vehiculo.marca }} - {{ vehiculo.modelo }}
+              </li>
+            </ul>
+          </td>
+          <td class="py-3 px-4 text-center">
+            <div class="flex justify-center gap-2">
+              <button
+                type="button"
+                (click)="editarVendedor(vendedor)"
+                class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-sm">
+                Editar
+              </button>
+              <button
+                type="button"
+                (click)="eliminarVendedor(vendedor)"
+                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm">
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Botón para Crear Vendedor -->
+  <div class="mt-6 text-right">
+    <button
+      (click)="verDialogo()"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md shadow-md">
+      Crear Vendedor
+    </button>
+  </div>
+</div>
+
+<!-- Modal -->
+<p-dialog header="{{tituloDialogo}}" [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }">
+  <p class="text-gray-600 mb-5">Ingrese los datos del vendedor.</p>
+
+  <div class="space-y-4">
+    <div>
+      <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+      <input
+        [(ngModel)]="nuevaVen.nombre"
+        id="nombre"
+        type="text"
+        autocomplete="off"
+        class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    <div>
+      <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
+      <input
+        [(ngModel)]="nuevaVen.telefono"
+        id="telefono"
+        type="text"
+        autocomplete="off"
+        class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    <div>
+      <label for="vehiculos" class="block text-sm font-medium text-gray-700">Vehículos</label>
+      <select
+        [(ngModel)]="nuevaVen.vehiculos"
+        id="vehiculos"
+        multiple
+        class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        <option *ngFor="let vehiculo of vehiculos" [value]="vehiculo">
+          {{ vehiculo.marca }} - {{ vehiculo.modelo }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Botones -->
+  <div class="mt-5 flex justify-end gap-4">
+    <button
+      (click)="visible = false"
+      class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md">
+      Cancelar
+    </button>
+    <button
+      (click)="guardarVendedor()"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+      Guardar
+    </button>
+  </div>
+</p-dialog>

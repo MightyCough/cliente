@@ -1,0 +1,155 @@
+<app-navegation></app-navegation>
+<p-confirmDialog></p-confirmDialog>
+<p-toast></p-toast>
+
+<div class="container mx-auto mt-8">
+  <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Gestión de Vehículos</h1>
+
+  <!-- Tabla -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+      <thead>
+        <tr class="bg-gray-100 border-b border-gray-200">
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">ID</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">Marca</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">Modelo</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">Año</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">Precio</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">Descripción</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold text-gray-600">Disponible</th>
+          <th class="py-3 px-4 text-center text-sm font-semibold text-gray-600">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tipo of tipos" class="border-b hover:bg-gray-50">
+          <td class="py-3 px-4 text-sm text-gray-700">{{ tipo.id }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">{{ tipo.marca }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">{{ tipo.modelo }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">{{ tipo.anio }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">{{ tipo.precio }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">{{ tipo.descripcion }}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">
+            <span
+              class="px-2 py-1 rounded-lg text-xs font-medium"
+              [class.bg-green-100]="tipo.disponible"
+              [class.text-green-800]="tipo.disponible"
+              [class.bg-red-100]="!tipo.disponible"
+              [class.text-red-800]="!tipo.disponible">
+              {{ tipo.disponible ? 'Sí' : 'No' }}
+            </span>
+          </td>
+          <td class="py-3 px-4 text-center">
+            <div class="flex justify-center gap-2">
+              <button
+                type="button"
+                (click)="editarTipo(tipo)"
+                class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-sm">
+                Editar
+              </button>
+              <button
+                type="button"
+                (click)="eliminarVehiculo(tipo)"
+                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm">
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Botón para Crear Tipo -->
+  <div class="mt-6 text-right">
+    <button
+      (click)="verDialogo()"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md shadow-md">
+      Crear Vehículo
+    </button>
+  </div>
+</div>
+
+<!-- Modal -->
+<p-dialog header="{{tituloDialogo}}" [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }">
+  <p class="text-gray-600 mb-5">Ingrese los datos del vehículo.</p>
+
+  <div class="space-y-4">
+    <div>
+      <label for="marca" class="block text-sm font-medium text-gray-700">Marca</label>
+      <input
+        [(ngModel)]="nuevaTipo.marca"
+        id="marca"
+        type="text"
+        autocomplete="off"
+        class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    <div>
+      <label for="modelo" class="block text-sm font-medium text-gray-700">Modelo</label>
+      <input
+        [(ngModel)]="nuevaTipo.modelo"
+        id="modelo"
+        type="text"
+        autocomplete="off"
+        class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    <div>
+      <label for="anio" class="block text-sm font-medium text-gray-700">Año</label>
+      <input
+        [(ngModel)]="nuevaTipo.anio"
+        id="anio"
+        type="number"
+        autocomplete="off"
+        class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    <div>
+      <label for="precio" class="block text-sm font-medium text-gray-700">Precio</label>
+      <input
+        [(ngModel)]="nuevaTipo.precio"
+        id="precio"
+        type="number"
+        autocomplete="off"
+        class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    <div>
+      <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
+      <input
+        [(ngModel)]="nuevaTipo.descripcion"
+        id="descripcion"
+        type="text"
+        autocomplete="off"
+        class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    </div>
+    <div>
+      <label for="disponible" class="block text-sm font-medium text-gray-700">Disponible</label>
+      <p-triStateCheckbox
+        [(ngModel)]="nuevaTipo.disponible"
+        variant="filled"
+        inputId="tricheckbox">
+      </p-triStateCheckbox>
+    </div>
+
+  </div>
+
+  <!-- Botones -->
+  <div class="mt-5 flex justify-end gap-4">
+    <button
+      (click)="visible = false"
+      class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-md">
+      Cancelar
+    </button>
+    <button
+      (click)="guardarTipo()"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+      Guardar
+    </button>
+  </div>
+</p-dialog>
+
+<!-- Botón de Cerrar Sesión -->
+<div class="mt-6">
+  <button
+    (click)="logout()"
+    class="w-full py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-md focus:outline-none">
+    Cerrar Sesión
+  </button>
+</div>
